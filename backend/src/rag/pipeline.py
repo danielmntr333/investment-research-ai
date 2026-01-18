@@ -4,7 +4,7 @@ Main RAG orchestration pipeline.
 Combines retrieval and generation to answer questions from documents.
 Supports advanced features like hybrid search, query transformation, and reranking.
 """
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, AsyncGenerator
 from dataclasses import dataclass
 import time
 from src.rag.retrieval import Retriever
@@ -232,6 +232,205 @@ class RAGPipeline:
                     "error": str(e),
                     "processing_time": time.time() - start_time if 'start_time' in locals() else 0
                 }
+            }
+    
+    async def query_stream(
+        self,
+        question: str,
+        document_ids: Optional[List[str]] = None,
+        top_k: Optional[int] = None,
+        min_similarity: float = 0.3,
+        system_prompt: Optional[str] = None,
+        strategy: str = 'hybrid',
+        use_query_transform: bool = False,
+        use_reranking: bool = False,
+        query_transform_strategy: Optional[QueryStrategy] = None
+    ) -> AsyncGenerator[Dict, None]:
+        """
+        Execute RAG query pipeline with streaming for real-time updates.
+        
+        Yields events at each stage:
+        - Pipeline progress (query transform, retrieval, reranking)
+        - Token-by-token generation
+        - Final result with sources
+        
+        Args:
+            Same as query() method
+            
+        Yields:
+            Dict events with different types:
+            - {'type': 'step', 'step': str, 'status': 'start'|'complete', 'data': Dict}
+            - {'type': 'token', 'content': str}
+            - {'type': 'sources', 'sources': List[Dict]}
+            - {'type': 'done', 'answer': str, 'sources': List, 'metadata': Dict}
+            - {'type': 'error', 'message': str}
+        """
+        try:
+            start_time = time.time()
+            k = top_k or self.top_k
+            
+            # Step 1: Query transformation (if enabled)
+            if use_query_transform:
+                yield {
+                    "type": "step",
+                    "step": "query_transform",
+                    "status": "start",
+                    "message": "Analyzing your question..."
+                }
+                
+                if query_transform_strategy is None:
+                    query_transform_strategy = self.query_transformer.auto_select_strategy(question)
+                
+                import asyncio
+                try:
+                    loop = asyncio.get_event_loop()
+                except RuntimeError:
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+                
+                transformed_queries = loop.run_until_complete(
+                    self.query_transformer.transform(question, query_transform_strategy)
+                )
+                
+                yield {
+                    "type": "step",
+                    "step": "query_transform",
+                    "status": "complete",
+                    "data": {
+                        "queries": transformed_queries,
+                        "strategy": query_transform_strategy
+                    }
+                }
+            else:
+                transformed_queries = [question]
+            
+            # Step 2: Retrieval
+            yield {
+                "type": "step",
+                "step": "retrieval",
+                "status": "start",
+                "message": "Searching through documents..."
+            }
+            
+            all_chunks = []
+            for query in transformed_queries:
+                chunks = self.retriever.retrieve(
+                    query=query,
+                    top_k=k * 2 if use_reranking else k,
+                    document_ids=document_ids,
+                    min_similarity=min_similarity,
+                    strategy=strategy,
+                    use_reranking=False
+                )
+                all_chunks.extend(chunks)
+            
+            # Deduplicate chunks
+            seen_ids = set()
+            unique_chunks = []
+            for chunk in all_chunks:
+                chunk_id = chunk.get('id')
+                if chunk_id and chunk_id not in seen_ids:
+                    seen_ids.add(chunk_id)
+                    unique_chunks.append(chunk)
+            
+            unique_chunks.sort(
+                key=lambda x: x.get('score', x.get('similarity', 0)), 
+                reverse=True
+            )
+            retrieved_chunks = unique_chunks[:k * 2 if use_reranking else k]
+            
+            yield {
+                "type": "step",
+                "step": "retrieval",
+                "status": "complete",
+                "data": {
+                    "chunks_found": len(retrieved_chunks),
+                    "strategy": strategy
+                }
+            }
+            
+            # Step 3: Reranking (if enabled)
+            if use_reranking and self.reranker and len(retrieved_chunks) > k:
+                yield {
+                    "type": "step",
+                    "step": "reranking",
+                    "status": "start",
+                    "message": "Prioritizing most relevant information..."
+                }
+                
+                retrieved_chunks = self.reranker.rerank(question, retrieved_chunks, k)
+                
+                yield {
+                    "type": "step",
+                    "step": "reranking",
+                    "status": "complete",
+                    "data": {"final_chunks": len(retrieved_chunks)}
+                }
+            else:
+                retrieved_chunks = retrieved_chunks[:k]
+            
+            # Step 4: Check if we have results
+            if not retrieved_chunks:
+                yield {
+                    "type": "error",
+                    "message": "No relevant information found in documents"
+                }
+                return
+            
+            # Step 5: Generate answer with streaming
+            yield {
+                "type": "step",
+                "step": "generation",
+                "status": "start",
+                "message": "Generating answer..."
+            }
+            
+            full_answer = ""
+            sources = []
+            
+            async for event in self.llm_provider.generate_with_context_stream(
+                query=question,
+                context_chunks=retrieved_chunks,
+                system_prompt=system_prompt,
+                temperature=self.temperature
+            ):
+                if event['type'] == 'token':
+                    full_answer += event['content']
+                    yield event
+                elif event['type'] == 'sources':
+                    sources = event['sources']
+                    yield event
+                elif event['type'] == 'done':
+                    full_answer = event['full_answer']
+                    sources = event['sources']
+                elif event['type'] == 'error':
+                    yield event
+                    return
+            
+            # Step 6: Send final result
+            processing_time = time.time() - start_time
+            
+            yield {
+                "type": "done",
+                "answer": full_answer,
+                "sources": sources,
+                "metadata": {
+                    "retrieved_chunks": len(retrieved_chunks),
+                    "unique_chunks": len(unique_chunks),
+                    "transformed_queries": transformed_queries,
+                    "retrieval_strategy": strategy,
+                    "used_query_transform": use_query_transform,
+                    "used_reranking": use_reranking and self.reranker is not None,
+                    "model": self.llm_provider.model,
+                    "processing_time": processing_time,
+                    "status": "success"
+                }
+            }
+            
+        except Exception as e:
+            yield {
+                "type": "error",
+                "message": f"Pipeline error: {str(e)}"
             }
     
     def query_with_conversation(

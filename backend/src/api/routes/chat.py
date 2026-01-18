@@ -169,7 +169,10 @@ async def chat_stream(request: ChatRequest):
     """
     Send a chat message with Server-Sent Events (SSE) streaming.
     
-    Streams agent execution steps in real-time for UI visualization.
+    Streams real-time updates:
+    - Pipeline progress (retrieval, reranking, etc.)
+    - Token-by-token answer generation
+    - Agent execution steps
     """
     print(f"\n[CHAT STREAM ENDPOINT] Received request")
     print(f"Query: {request.query}")
@@ -178,111 +181,145 @@ async def chat_stream(request: ChatRequest):
     print("-" * 60)
     
     async def generate():
-        """Generate SSE events for agent execution."""
+        """Generate SSE events for streaming."""
         try:
             print(f"[STREAM] Starting generation, use_agents={request.use_agents}")
             
             if request.use_agents:
-                print("[STREAM] Using agent system")
+                print("[STREAM] Using agent system with real-time streaming")
                 agent_graph = get_agent_graph()
                 
                 # Convert chat history
                 chat_history = [{"role": msg.role, "content": msg.content} for msg in request.chat_history]
                 
-                # Execute agent graph
-                print(f"[STREAM] Calling agent_graph.arun()")
-                print(f"  - query: {request.query}")
-                print(f"  - user_id: {request.user_id}")
-                
-                result = await agent_graph.arun(
+                # Stream agent execution in real-time
+                final_state = None
+                async for event in agent_graph.arun_stream(
                     query=request.query,
                     chat_history=chat_history,
                     user_id=request.user_id,
                     document_ids=request.document_ids
-                )
+                ):
+                    if event['type'] == 'agent_start':
+                        # Agent starting
+                        yield f"data: {json.dumps({'type': 'agent_step', 'data': {'agent': event['agent'], 'action': event['action'], 'status': 'start'}})}\n\n"
+                        await asyncio.sleep(0.05)  # Small delay for UI
+                        
+                    elif event['type'] == 'agent_complete':
+                        # Agent completed
+                        yield f"data: {json.dumps({'type': 'agent_step', 'data': {'agent': event['agent'], 'action': event['action'], 'status': 'complete', 'duration': event['duration']}})}\n\n"
+                        await asyncio.sleep(0.05)
+                        
+                    elif event['type'] == 'done':
+                        final_state = event['final_state']
+                        
+                    elif event['type'] == 'error':
+                        yield f"data: {json.dumps({'type': 'error', 'data': {'message': event['message']}})}\n\n"
+                        return
                 
-                print(f"[STREAM] Agent graph completed")
-                print(f"  - agent_trace steps: {len(result.get('agent_trace', []))}")
-                
-                # Stream agent trace events
-                for step in result['agent_trace']:
-                    event_data = {
-                        'type': 'agent_step',
+                # Stream final answer if we got final state
+                if final_state:
+                    # Format sources
+                    sources = final_state.get('research_output', {}).get('sources', [])
+                    source_list = [
+                        {
+                            'source_number': src.get('source_number', idx + 1),
+                            'document_name': src.get('metadata', {}).get('document_name', 'Unknown Document'),
+                            'content_preview': src.get('content', '')[:200],
+                            'chunk_id': src.get('chunk_id'),
+                            'similarity': src.get('similarity')
+                        }
+                        for idx, src in enumerate(sources)
+                    ]
+                    
+                    # Stream final answer
+                    final_event = {
+                        'type': 'final_answer',
                         'data': {
-                            'agent': step['agent'],
-                            'action': step['action'],
-                            'duration': step.get('duration', 0)
+                            'answer': final_state['final_answer'],
+                            'sources': source_list,
+                            'citations': final_state['citations'],
+                            'confidence_score': final_state['confidence_score'],
+                            'execution_time': final_state['execution_time'],
+                            'errors': final_state['errors']
                         }
                     }
-                    yield f"data: {json.dumps(event_data)}\n\n"
-                    await asyncio.sleep(0.1)  # Small delay for UI smoothness
-                
-                # Format sources
-                sources = result.get('research_output', {}).get('sources', [])
-                source_list = [
-                    {
-                        'source_number': src.get('source_number', idx + 1),
-                        'document_name': src.get('metadata', {}).get('document_name', 'Unknown Document'),
-                        'content_preview': src.get('content', '')[:200],
-                        'chunk_id': src.get('chunk_id'),
-                        'similarity': src.get('similarity')
-                    }
-                    for idx, src in enumerate(sources)
-                ]
-                
-                # Stream final answer
-                final_event = {
-                    'type': 'final_answer',
-                    'data': {
-                        'answer': result['final_answer'],
-                        'sources': source_list,
-                        'citations': result['citations'],
-                        'confidence_score': result['confidence_score'],
-                        'execution_time': result['execution_time'],
-                        'errors': result['errors']
-                    }
-                }
-                yield f"data: {json.dumps(final_event)}\n\n"
+                    yield f"data: {json.dumps(final_event)}\n\n"
                 
             else:
-                # Simple RAG
+                # Simple RAG with streaming
+                print("[STREAM] Using RAG pipeline with streaming")
                 rag = RAGPipeline()
-                result = rag.query(
+                
+                async for event in rag.query_stream(
                     question=request.query,
                     document_ids=request.document_ids,
                     strategy='hybrid',
                     use_reranking=True
-                )
-                
-                # Format sources
-                sources = result.get('sources', [])
-                source_list = [
-                    {
-                        'source_number': src.get('source_number', idx + 1),
-                        'document_name': src.get('metadata', {}).get('document_name', 'Unknown Document'),
-                        'content_preview': src.get('content', '')[:200],
-                        'chunk_id': src.get('chunk_id'),
-                        'similarity': src.get('similarity')
-                    }
-                    for idx, src in enumerate(sources)
-                ]
-                
-                # Stream result
-                event_data = {
-                    'type': 'final_answer',
-                    'data': {
-                        'answer': result['answer'],
-                        'sources': source_list,
-                        'citations': result.get('sources', []),
-                        'confidence_score': 0.8
-                    }
-                }
-                yield f"data: {json.dumps(event_data)}\n\n"
+                ):
+                    # Forward all events from RAG pipeline
+                    if event['type'] == 'step':
+                        # Pipeline progress event
+                        step_event = {
+                            'type': 'pipeline_step',
+                            'data': {
+                                'step': event['step'],
+                                'status': event['status'],
+                                'message': event.get('message', ''),
+                                'data': event.get('data', {})
+                            }
+                        }
+                        yield f"data: {json.dumps(step_event)}\n\n"
+                        
+                    elif event['type'] == 'token':
+                        # Token streaming
+                        token_event = {
+                            'type': 'content',
+                            'content': event['content']
+                        }
+                        yield f"data: {json.dumps(token_event)}\n\n"
+                        
+                    elif event['type'] == 'sources':
+                        # Sources found
+                        sources_event = {
+                            'type': 'sources_found',
+                            'data': {
+                                'sources': event['sources']
+                            }
+                        }
+                        yield f"data: {json.dumps(sources_event)}\n\n"
+                        
+                    elif event['type'] == 'done':
+                        # Final answer with metadata
+                        final_event = {
+                            'type': 'final_answer',
+                            'data': {
+                                'answer': event['answer'],
+                                'sources': event['sources'],
+                                'citations': event['sources'],
+                                'confidence_score': 0.85,
+                                'execution_time': event['metadata']['processing_time'],
+                                'metadata': event['metadata']
+                            }
+                        }
+                        yield f"data: {json.dumps(final_event)}\n\n"
+                        
+                    elif event['type'] == 'error':
+                        # Error event
+                        error_event = {
+                            'type': 'error',
+                            'data': {'message': event['message']}
+                        }
+                        yield f"data: {json.dumps(error_event)}\n\n"
+                        return
             
             # Send done event
             yield f"data: {json.dumps({'type': 'done'})}\n\n"
         
         except Exception as e:
+            print(f"[STREAM] Error: {str(e)}")
+            import traceback
+            traceback.print_exc()
             error_event = {
                 'type': 'error',
                 'data': {'message': str(e)}

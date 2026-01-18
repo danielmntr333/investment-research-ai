@@ -1,7 +1,8 @@
 """LangGraph orchestrator for multi-agent system."""
 from langgraph.graph import StateGraph, END
-from typing import Literal, Dict, List, Optional
+from typing import Literal, Dict, List, Optional, AsyncGenerator
 import time
+import asyncio
 
 from .state import AgentState
 from .nodes import (
@@ -224,6 +225,155 @@ class ResearchAgentGraph:
             initial_state['final_answer'] = f"An error occurred during processing: {str(e)}"
             initial_state['execution_time'] = time.time() - start_time
             return initial_state
+    
+    async def arun_stream(
+        self, 
+        query: str, 
+        chat_history: Optional[List[Dict]] = None,
+        user_id: Optional[str] = None,
+        document_ids: Optional[List[str]] = None
+    ) -> AsyncGenerator[Dict, None]:
+        """
+        Execute the agent graph with streaming for real-time updates.
+        
+        Yields events as each agent starts and completes execution.
+        
+        Args:
+            query: User's question
+            chat_history: Previous conversation messages
+            user_id: User ID for document access
+            document_ids: Optional list of specific document IDs to search
+        
+        Yields:
+            Dict events:
+            - {'type': 'agent_start', 'agent': str, 'action': str}
+            - {'type': 'agent_complete', 'agent': str, 'duration': float, 'data': Dict}
+            - {'type': 'done', ...final_state...}
+            - {'type': 'error', 'message': str}
+        """
+        print(f"\n[AGENT GRAPH STREAM] Starting arun_stream()")
+        print(f"  - query: {query}")
+        print(f"  - user_id: {user_id}")
+        
+        start_time = time.time()
+        
+        # Initialize state
+        initial_state: AgentState = {
+            'query': query,
+            'chat_history': chat_history or [],
+            'user_id': user_id,
+            'retrieved_docs': [],
+            'document_ids': document_ids or [],
+            'supervisor_analysis': {},
+            'research_output': {},
+            'analysis_output': {},
+            'fact_check_results': {},
+            'web_search_results': [],
+            'final_answer': "",
+            'citations': [],
+            'confidence_score': 0.0,
+            'agent_trace': [],
+            'errors': [],
+            'retry_count': 0,
+            'total_tokens': 0,
+            'total_cost': 0.0,
+            'execution_time': 0.0
+        }
+        
+        try:
+            # Track agent execution times
+            agent_start_times = {}
+            
+            # Stream events from the graph
+            async for event in self.app.astream(initial_state):
+                # LangGraph astream yields {node_name: state_update}
+                for node_name, state_update in event.items():
+                    if node_name == '__start__' or node_name == '__end__':
+                        continue
+                    
+                    # Agent started
+                    if node_name not in agent_start_times:
+                        agent_start_times[node_name] = time.time()
+                        yield {
+                            'type': 'agent_start',
+                            'agent': node_name,
+                            'action': self._get_agent_action(node_name),
+                            'timestamp': time.time()
+                        }
+                    
+                    # Agent completed (got state update)
+                    if node_name in agent_start_times:
+                        duration = time.time() - agent_start_times[node_name]
+                        yield {
+                            'type': 'agent_complete',
+                            'agent': node_name,
+                            'action': self._get_agent_action(node_name),
+                            'duration': duration,
+                            'data': self._extract_agent_data(node_name, state_update)
+                        }
+            
+            # Get final state by running one more time (or use last state_update)
+            # For simplicity, we'll run again to get complete state
+            final_state = await self.app.ainvoke(initial_state)
+            final_state['execution_time'] = time.time() - start_time
+            
+            # Calculate tokens and cost
+            if hasattr(self.llm, 'total_prompt_tokens'):
+                final_state['total_tokens'] = (
+                    self.llm.total_prompt_tokens + 
+                    self.llm.total_completion_tokens
+                )
+                final_state['total_cost'] = (
+                    (self.llm.total_prompt_tokens / 1_000_000 * 0.15) +
+                    (self.llm.total_completion_tokens / 1_000_000 * 0.60)
+                )
+            
+            yield {
+                'type': 'done',
+                'final_state': final_state
+            }
+            
+        except Exception as e:
+            print(f"[AGENT GRAPH STREAM] ERROR: {e}")
+            import traceback
+            traceback.print_exc()
+            
+            yield {
+                'type': 'error',
+                'message': f"Agent execution error: {str(e)}"
+            }
+    
+    def _get_agent_action(self, agent_name: str) -> str:
+        """Get human-readable action for agent."""
+        actions = {
+            'supervisor': 'analyzing query',
+            'research': 'searching documents',
+            'analysis': 'analyzing data',
+            'fact_checker': 'verifying facts',
+            'web_search': 'searching web',
+            'synthesizer': 'generating answer'
+        }
+        return actions.get(agent_name, 'processing')
+    
+    def _extract_agent_data(self, agent_name: str, state_update: Dict) -> Dict:
+        """Extract relevant data from agent state update."""
+        # Extract key information based on agent type
+        data = {}
+        
+        if agent_name == 'research' and 'research_output' in state_update:
+            output = state_update['research_output']
+            if isinstance(output, dict):
+                data['sources_found'] = len(output.get('sources', []))
+        
+        elif agent_name == 'web_search' and 'web_search_results' in state_update:
+            data['results_found'] = len(state_update['web_search_results'])
+        
+        elif agent_name == 'fact_checker' and 'fact_check_results' in state_update:
+            results = state_update['fact_check_results']
+            if isinstance(results, dict):
+                data['verified'] = results.get('verified', False)
+        
+        return data
     
     def visualize(self, output_path: str = "agent_graph.png"):
         """

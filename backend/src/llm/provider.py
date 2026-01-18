@@ -3,7 +3,7 @@ LLM Provider for OpenAI.
 
 Handles text generation for RAG responses with proper context management.
 """
-from typing import List, Dict, Optional, Generator
+from typing import List, Dict, Optional, Generator, AsyncGenerator
 import openai
 from src.utils.config import settings
 
@@ -183,6 +183,99 @@ Please provide a detailed answer based on the context above."""
                 "model": self.model
             }
         }
+    
+    async def generate_with_context_stream(
+        self,
+        query: str,
+        context_chunks: List[Dict],
+        system_prompt: Optional[str] = None,
+        temperature: float = 0.0
+    ) -> AsyncGenerator[Dict, None]:
+        """
+        Generate answer using retrieved context chunks with streaming.
+        
+        Yields tokens as they are generated for real-time UI updates.
+        
+        Args:
+            query: User's question
+            context_chunks: Retrieved document chunks with content and metadata
+            system_prompt: Optional system instructions
+            temperature: Response randomness
+            
+        Yields:
+            Dict events:
+            - {'type': 'token', 'content': str} - Individual token
+            - {'type': 'sources', 'sources': List[Dict]} - Source documents
+            - {'type': 'done', 'full_answer': str} - Complete answer
+        """
+        # Build system prompt
+        if system_prompt is None:
+            system_prompt = """You are a financial research assistant. Answer questions based on the provided context from financial documents.
+
+Rules:
+1. Only use information from the provided context
+2. Cite sources using [Source X] notation
+3. If the context doesn't contain enough information, say so
+4. Be precise with numbers and dates
+5. Provide concise, accurate answers"""
+        
+        # Format context
+        context_text = self._format_context(context_chunks)
+        
+        # Build user message
+        user_message = f"""Context from documents:
+
+{context_text}
+
+Question: {query}
+
+Please provide a detailed answer based on the context above."""
+        
+        # Generate response
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message}
+        ]
+        
+        # Extract and yield sources first
+        sources = self._extract_sources(context_chunks)
+        yield {
+            "type": "sources",
+            "sources": sources
+        }
+        
+        # Stream tokens
+        full_answer = ""
+        try:
+            stream = self.client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=2000,
+                stream=True
+            )
+            
+            for chunk in stream:
+                if chunk.choices[0].delta.content:
+                    token = chunk.choices[0].delta.content
+                    full_answer += token
+                    yield {
+                        "type": "token",
+                        "content": token
+                    }
+            
+            # Yield completion event
+            yield {
+                "type": "done",
+                "full_answer": full_answer,
+                "sources": sources
+            }
+                    
+        except Exception as e:
+            yield {
+                "type": "error",
+                "message": f"LLM streaming failed: {str(e)}"
+            }
     
     def _format_context(self, chunks: List[Dict]) -> str:
         """
