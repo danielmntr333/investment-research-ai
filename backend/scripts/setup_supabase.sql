@@ -3,14 +3,20 @@
 -- Enable pgvector extension
 CREATE EXTENSION IF NOT EXISTS vector;
 
--- Users table (simple auth with API keys)
+-- Users table (OAuth authentication - to be implemented)
+-- NOTE: Currently unused. Future enhancement will add OAuth 2.0 authentication.
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,
-    api_key TEXT UNIQUE NOT NULL,
+    oauth_provider TEXT,  -- e.g., 'google', 'github'
+    oauth_sub TEXT,       -- OAuth subject (unique user ID from provider)
+    name TEXT,
+    avatar_url TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    last_login TIMESTAMP WITH TIME ZONE,
     usage_quota INTEGER DEFAULT 1000,
-    usage_count INTEGER DEFAULT 0
+    usage_count INTEGER DEFAULT 0,
+    UNIQUE(oauth_provider, oauth_sub)
 );
 
 -- Documents table

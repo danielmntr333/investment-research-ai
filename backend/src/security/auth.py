@@ -1,24 +1,32 @@
-"""API key authentication."""
-from fastapi import Security, HTTPException
-from fastapi.security import APIKeyHeader
+"""
+Authentication placeholder for future OAuth implementation.
 
-api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+NOTE: This app is currently designed for personal use without authentication.
+Future enhancement will implement OAuth 2.0 for consumer authentication.
 
+Planned OAuth Flow:
+1. User clicks "Sign in with Google/GitHub"
+2. OAuth provider authenticates user
+3. App receives access token and user profile
+4. Create/update user record in database
+5. Store session token in httpOnly cookie
+6. Protect routes with OAuth middleware
 
-async def verify_api_key(api_key: str = Security(api_key_header)):
+Reference: https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/
+"""
+
+# TODO: Implement OAuth 2.0 authentication
+# - Add OAuth provider configuration (Google, GitHub, etc.)
+# - Implement token validation middleware
+# - Add user session management
+# - Protect API routes with OAuth dependency
+
+async def get_current_user():
     """
-    Verify API key and check rate limits.
+    Placeholder for future OAuth user retrieval.
     
-    Returns:
-        User object if valid
-    
-    Raises:
-        HTTPException if invalid or quota exceeded
+    Will validate OAuth token and return authenticated user.
+    Currently returns None (no authentication required).
     """
-    if not api_key:
-        raise HTTPException(status_code=401, detail="API key required")
-    
-    # To be implemented: Check against database
-    # To be implemented: Check rate limits
-    
-    return {"user_id": "test", "email": "test@example.com"}
+    # TODO: Implement OAuth token validation
+    return None

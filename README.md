@@ -230,7 +230,7 @@ result = await eval_pipeline.run_full_evaluation()
 ### 🔐 Production Engineering
 
 **Security**
-- API key authentication with Supabase
+- **Authentication**: OAuth 2.0 (planned enhancement - see [Future Enhancements](#future-enhancements))
 - Input validation (Pydantic models)
 - Prompt injection detection
 - PII detection support
@@ -656,8 +656,9 @@ poetry run python scripts/debug_evals.py
 
 **Via API**
 ```bash
-curl -X POST http://localhost:8000/api/evals/run \
-  -H "Authorization: Bearer YOUR_API_KEY"
+# Note: Authentication not required for personal use
+# OAuth 2.0 will be added in a future enhancement
+curl -X POST http://localhost:8000/api/evals/run
 ```
 
 ### Evaluation Results
@@ -707,7 +708,6 @@ print(result['judge'])   # LLM judge scores
 ```bash
 POST /api/chat
 Content-Type: application/json
-Authorization: Bearer YOUR_API_KEY
 
 {
   "message": "What was Tesla's revenue?",
@@ -721,7 +721,6 @@ Authorization: Bearer YOUR_API_KEY
 ```bash
 POST /api/documents/upload
 Content-Type: multipart/form-data
-Authorization: Bearer YOUR_API_KEY
 
 file=@document.pdf
 ```
@@ -745,15 +744,15 @@ POST /api/analyze
 
 ### Authentication
 
-Include API key in header:
-```bash
-Authorization: Bearer YOUR_API_KEY
-```
+**Current**: None required (personal use app)
 
-Or query parameter:
-```bash
-?api_key=YOUR_API_KEY
-```
+**Planned Enhancement**: OAuth 2.0 authentication will be added in a future commit.
+- OAuth providers: Google, GitHub
+- Session management with httpOnly cookies
+- Protected API routes
+- User-specific document storage
+
+See [Future Enhancements](#future-enhancements) section below.
 
 ---
 
@@ -885,6 +884,41 @@ Additional docs:
 - **[AGENT_ROUTING_EXPLAINED.md](AGENT_ROUTING_EXPLAINED.md)**: Agent routing logic
 - **[backend/DATABASE_TABLES.md](backend/DATABASE_TABLES.md)**: Database schema
 - **[backend/EVALUATION_SYSTEM.md](backend/EVALUATION_SYSTEM.md)**: Evaluation details
+
+---
+
+## 🚀 Future Enhancements
+
+This platform is designed for personal use without authentication. The following enhancements are planned for future commits:
+
+### OAuth 2.0 Authentication
+- **OAuth Providers**: Google, GitHub (consumer-friendly authentication)
+- **Session Management**: Secure httpOnly cookies with refresh tokens
+- **User Isolation**: Per-user document storage and conversations
+- **Protected Routes**: Middleware-based authentication for all API endpoints
+- **Usage Tracking**: Per-user quotas and analytics
+
+**Why OAuth?** As a consumer-facing application, OAuth provides:
+- Seamless user experience (no password management)
+- Trusted authentication via established providers
+- Industry-standard security practices
+- Easy integration with FastAPI's OAuth2 support
+
+**Implementation Plan**:
+1. Add OAuth provider configuration (python-social-auth or authlib)
+2. Update `users` table schema (already prepared in `setup_supabase.sql`)
+3. Implement token validation middleware
+4. Add protected route decorators to API endpoints
+5. Update frontend with "Sign in with Google/GitHub" flow
+6. Add user context to all database operations
+
+**Status**: Schema prepared, awaiting deployment requirements
+
+### Other Planned Enhancements
+- Multi-user conversation sharing
+- Document collaboration features
+- Advanced caching layer (Redis)
+- Real-time notifications (WebSockets)
 
 ---
 ## 🤝 Contributing

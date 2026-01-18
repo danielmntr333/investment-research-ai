@@ -197,14 +197,19 @@ investment-research-ai/
 -- Enable pgvector extension
 CREATE EXTENSION IF NOT EXISTS vector;
 
--- Users table (simple auth with API keys)
+-- Users table (OAuth authentication - future enhancement)
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,
-    api_key TEXT UNIQUE NOT NULL,
+    oauth_provider TEXT,  -- e.g., 'google', 'github'
+    oauth_sub TEXT,       -- OAuth subject (unique user ID from provider)
+    name TEXT,
+    avatar_url TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    last_login TIMESTAMP WITH TIME ZONE,
     usage_quota INTEGER DEFAULT 1000,
-    usage_count INTEGER DEFAULT 0
+    usage_count INTEGER DEFAULT 0,
+    UNIQUE(oauth_provider, oauth_sub)
 );
 
 -- Documents table
@@ -706,18 +711,33 @@ class LLMProvider:
 
 **File**: `auth.py`
 
-**Simple API Key Auth**:
+**OAuth 2.0 Authentication (Future Enhancement)**:
+> **Note**: Currently designed for personal use. OAuth will be implemented in a future commit.
+
+**Planned OAuth Implementation**:
 ```python
-from fastapi import Security, HTTPException
-from fastapi.security import APIKeyHeader
+from fastapi import Security, HTTPException, Depends
+from fastapi_sso.sso.google import GoogleSSO
+from fastapi_sso.sso.github import GithubSSO
 
-api_key_header = APIKeyHeader(name="X-API-Key")
+google_sso = GoogleSSO(
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    redirect_uri="https://your-domain.com/auth/callback"
+)
 
-async def verify_api_key(api_key: str = Security(api_key_header)):
-    # Check against database
-    user = await db.get_user_by_api_key(api_key)
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid API key")
+async def verify_oauth_token(token: str):
+    """Validate OAuth token and return user."""
+    # Verify token with OAuth provider
+    user_info = await google_sso.verify_and_process(token)
+    
+    # Get or create user in database
+    user = await db.get_or_create_user(
+        oauth_provider='google',
+        oauth_sub=user_info['sub'],
+        email=user_info['email'],
+        name=user_info['name']
+    )
     
     # Check rate limits
     if user.usage_count >= user.usage_quota:
@@ -725,6 +745,15 @@ async def verify_api_key(api_key: str = Security(api_key_header)):
     
     return user
 ```
+
+**OAuth Flow**:
+1. User clicks "Sign in with Google/GitHub"
+2. Redirect to OAuth provider
+3. Provider authenticates and returns authorization code
+4. Exchange code for access token
+5. Fetch user profile from provider
+6. Create/update user in database
+7. Store session in httpOnly cookie
 
 #### B. Input Validation & Prompt Injection Defense
 

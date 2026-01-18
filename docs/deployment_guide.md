@@ -291,38 +291,24 @@ git push -u origin main
 
 ## Phase 5: Post-Deployment Setup
 
-### Step 5.1: Create Initial API Key
+### Step 5.1: Initial Setup
 
-```python
-# Run this script locally
-from supabase import create_client
-import secrets
+> **Note**: Authentication is not currently implemented (personal use app).  
+> OAuth 2.0 will be added in a future enhancement.
 
-url = "YOUR_SUPABASE_URL"
-key = "YOUR_SERVICE_ROLE_KEY"
-supabase = create_client(url, key)
-
-# Generate API key
-api_key = f"ira_{secrets.token_urlsafe(32)}"
-
-# Insert user
-supabase.table('users').insert({
-    'email': 'your@email.com',
-    'api_key': api_key,
-    'usage_quota': 1000
-}).execute()
-
-print(f"Your API key: {api_key}")
-# Save this key!
-```
+**For now, the app is open for personal use without authentication.**
 
 ### Step 5.2: Upload Sample Documents
 
 1. Go to your deployed frontend: `https://your-app.vercel.app`
-2. Enter your API key (from Step 5.1)
-3. Upload a sample PDF (try a financial report)
-4. Wait for processing (~30 seconds)
-5. Test a query: "What is this document about?"
+2. Upload a sample PDF (try a financial report)
+3. Wait for processing (~30 seconds)
+4. Test a query: "What is this document about?"
+
+**Future Enhancement**: When OAuth is implemented, users will:
+- Sign in with Google/GitHub
+- Have personal document libraries
+- Track their own usage quotas
 
 ### Step 5.3: Verify Everything Works
 
@@ -737,23 +723,30 @@ Production URLs:
 Backend API: https://your-app.modal.run
 Frontend: https://your-app.vercel.app
 
-API Keys: (Store in password manager!)
+Service API Keys: (Store in password manager!)
 - Supabase service_role key
 - OpenAI API key
 - Anthropic API key
 - Cohere API key
 - LangSmith API key
-- Your app API key
+
+Note: User authentication not implemented (personal use app)
 ```
 
 ---
 
 ## Next Steps
 
-1. **Add Authentication**: Implement proper user auth (Supabase Auth)
+1. **Add OAuth Authentication**: Implement OAuth 2.0 (Google, GitHub) for multi-user support
 2. **Custom Domain**: Setup custom domain for professional look
 3. **Analytics**: Add usage analytics (PostHog, Mixpanel)
 4. **User Feedback**: Implement feedback collection
 5. **Scaling**: Monitor and optimize as usage grows
+
+**Future Authentication Plan**:
+- OAuth 2.0 with Google/GitHub providers
+- User-specific document storage
+- Per-user usage tracking and quotas
+- Session management with httpOnly cookies
 
 **You're now live in production! 🚀**

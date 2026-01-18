@@ -288,26 +288,25 @@ interface ApiResponse<T> {
 
 class ApiClient {
   private baseUrl: string;
-  private apiKey: string | null;
+  // Note: Auth tokens will be stored in httpOnly cookies when OAuth is implemented
+  // Currently no authentication required (personal use)
 
   constructor() {
     this.baseUrl = API_BASE_URL;
-    this.apiKey = localStorage.getItem('api_key');
   }
 
-  setApiKey(key: string) {
-    this.apiKey = key;
-    localStorage.setItem('api_key', key);
-  }
+  // Future: OAuth authentication methods
+  // async signInWithGoogle() { ... }
+  // async signInWithGitHub() { ... }
+  // async signOut() { ... }
 
   private getHeaders(): HeadersInit {
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
     };
 
-    if (this.apiKey) {
-      headers['X-API-Key'] = this.apiKey;
-    }
+    // Future: OAuth token will be automatically included in httpOnly cookie
+    // No manual header management needed
 
     return headers;
   }
@@ -345,7 +344,8 @@ class ApiClient {
     try {
       const response = await fetch(`${this.baseUrl}/api/documents/upload`, {
         method: 'POST',
-        headers: this.apiKey ? { 'X-API-Key': this.apiKey } : {},
+        // Note: No auth headers needed for personal use
+        // Future: OAuth token will be in httpOnly cookie
         body: formData,
       });
 

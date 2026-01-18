@@ -386,9 +386,8 @@ test.describe('Complete User Flow', () => {
     // Navigate to app
     await page.goto('http://localhost:3000');
     
-    // Enter API key
-    await page.fill('[placeholder="Enter API key"]', 'test_key');
-    await page.click('button:has-text("Submit")');
+    // Note: No authentication required for personal use
+    // OAuth will be added in future enhancement
     
     // Upload document
     await page.click('text=Documents');
@@ -568,8 +567,10 @@ class InvestmentResearchUser(HttpUser):
     wait_time = between(1, 3)  # Wait 1-3 seconds between tasks
     
     def on_start(self):
-        """Login/setup before tasks."""
-        self.client.headers = {'X-API-Key': 'test_key'}
+        """Setup before tasks."""
+        # Note: No authentication required for personal use
+        # OAuth headers will be added in future enhancement
+        pass
     
     @task(3)
     def query_document(self):

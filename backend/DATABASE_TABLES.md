@@ -5,10 +5,10 @@ This document explains the purpose of each table in the database.
 ## Core Tables
 
 ### users
-Stores user accounts with API key authentication.
+Stores user accounts for OAuth authentication (future enhancement).
 
-**Status**: ✅ Active  
-**Used by**: Authentication middleware, API routes
+**Status**: ⚠️ Reserved (OAuth implementation pending)  
+**Used by**: Future authentication middleware, user-specific features
 
 ---
 
