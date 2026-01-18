@@ -1,0 +1,22 @@
+Test ID,Question,Difficulty,Capabilities,Faithfulness,Answer Relevancy,Context Precision,Context Recall,Answer Correctness,Numerical Accuracy,Citation Rate,Judge Overall,Overall Score,Status
+acme_revenue_001,What was ACME Corporation's total revenue in fiscal year 2023?,easy,,0.0,0.0,0.0,0.0,0.16196564288839171,0.0,0.0,1,0.06295725143107134,FAIL
+acme_margins_002,What was ACME's gross profit margin in 2023?,medium,,0.0,0.702088479553226,0.0,0.0,0.1581956892747438,0.0,0.0,1,0.11882273350623758,FAIL
+acme_segments_003,Which business segment contributed the most to ACME's revenue and what was its operating margin?,medium,,0.0,0.7346575055182095,0.0,0.0,0.16265525742905415,0.0,0.0,1,0.1217850210357811,FAIL
+acme_fcf_004,What was ACME's free cash flow for 2023 and how was it calculated?,medium,,0.0,0.7193587095733726,0.0,0.0,0.1568751103521523,0.0,0.0,1,0.120098705594042,FAIL
+acme_rd_005,How much did ACME invest in R&D as a percentage of revenue in 2023?,easy,,0.0,0.0,0.0,0.0,0.15907677136116763,0.0,0.0,1,0.06272614170889342,FAIL
+techcorp_q4_revenue_006,What was TechCorp's total revenue in Q4 2023 and what was the year-over-year growth rate?,easy,,0.0,0.0,0.0,0.0,0.1629570298215114,0.0,0.0,1,0.06303656238572092,FAIL
+techcorp_cloud_007,How did TechCorp's Cloud Computing division perform in Q4 2023?,medium,,0.0,0.0,0.0,0.0,0.1668895928628956,0.0,0.0,1,0.06335116742903166,FAIL
+techcorp_segments_008,Compare TechCorp's Cloud Computing and Hardware segment growth rates in Q4 2023.,medium,,0.0,0.6888674349687252,0.0,0.0,0.1626715158685774,0.0,0.0,1,0.11812311606698421,FAIL
+techcorp_fy_009,What was TechCorp's full year 2023 EPS and how did it compare to 2022?,easy,,0.0,0.0,0.0,0.0,0.15984851901672353,0.0,0.0,1,0.06278788152133788,FAIL
+techcorp_fcf_010,What was TechCorp's free cash flow in Q4 2023 and what was the free cash flow margin?,medium,,0.0,0.7220572883440527,0.0,0.0,0.1588750867702134,0.0,0.0,1,0.12047459000914129,FAIL
+globalbank_roe_011,What was GlobalBank's return on equity (ROE) in 2023?,easy,,0.0,0.693525022125081,0.0,0.0,0.16286601508258544,0.0,0.0,1,0.11851128297661333,FAIL
+globalbank_net_income_012,What was GlobalBank's net income in 2023 and how did it compare to 2022?,easy,,0.0,0.7119123931263429,0.0,0.0,0.1597564047912139,0.0,0.0,1,0.11973350383340454,FAIL
+globalbank_capital_013,"What was GlobalBank's Common Equity Tier 1 (CET1) ratio as of December 31, 2023?",medium,,0.0,0.7019302147275329,0.0,0.0,0.16129448995828782,0.0,0.0,1,0.11905797637486566,FAIL
+globalbank_segments_014,Which business segment contributed the most to GlobalBank's net income in 2023?,medium,,0.0,0.6975659989652825,0.0,0.0,0.16386933683724306,0.0,0.0,1,0.11891482686420204,FAIL
+globalbank_efficiency_015,What was GlobalBank's efficiency ratio in 2023 and how did it improve from 2022?,medium,,0.0,0.0,0.0,0.0,0.1634106544413809,0.0,0.0,1,0.06307285235531047,FAIL
+comparison_margins_016,Compare the operating margins of ACME and TechCorp in 2023.,hard,,0.0,0.6914410144165436,0.0,0.0,0.1614342385489828,0.0,0.0,1,0.1182300202372421,FAIL
+acme_quarterly_016,What was ACME's strongest quarter in 2023 by revenue?,medium,,0.0,0.7144906733053427,0.0,0.0,0.16224618544109057,0.0,0.0,1,0.12013894869971467,FAIL
+techcorp_guidance_017,What is TechCorp's revenue guidance for full year 2024?,easy,,0.0,0.6913593560609718,0.0,0.0,0.15684881153580327,0.0,0.0,1,0.117856653407742,FAIL
+globalbank_deposits_018,What was GlobalBank's total deposit base and what percentage was insured?,medium,,0.0,0.7142807155029788,0.0,0.0,0.15931662426626803,0.0,0.0,1,0.11988778718153975,FAIL
+acme_debt_019,"What was ACME's debt-to-equity ratio as of December 31, 2023?",medium,,0.0,0.7064563551244433,0.0,0.0,0.15682503533503234,0.0,0.0,1,0.11906251123675805,FAIL
+techcorp_ai_020,How much revenue did TechCorp's AI platform generate in Q4 2023?,medium,,0.0,0.7090023985615463,0.0,0.0,0.1688565757903629,0.0,0.0,1,0.12022871794815274,FAIL

@@ -1,0 +1,291 @@
+[
+  {
+    "id": "acme_revenue_001",
+    "question": "What was ACME Corporation's total revenue in fiscal year 2023?",
+    "expected_answer": "ACME Corporation's total revenue in fiscal year 2023 was $125.4 billion, compared to $118.2 billion in 2022, representing a year-over-year growth of 6.1%.",
+    "ground_truth_numbers": {
+      "revenue_2023": 125.4,
+      "revenue_2022": 118.2
+    },
+    "documents_needed": ["acme_corp_10k_2023.md"],
+    "difficulty": "easy",
+    "required_capabilities": ["factual_retrieval"]
+  },
+  {
+    "id": "acme_margins_002",
+    "question": "What was ACME's gross profit margin in 2023?",
+    "expected_answer": "ACME's gross profit margin in 2023 was 45.2%, which improved from 44.7% in 2022. The gross profit was $56.7 billion on revenue of $125.4 billion.",
+    "ground_truth_numbers": {
+      "margin": 45.2,
+      "gross_profit": 56.7,
+      "revenue": 125.4
+    },
+    "documents_needed": ["acme_corp_10k_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval", "calculation"]
+  },
+  {
+    "id": "acme_segments_003",
+    "question": "Which business segment contributed the most to ACME's revenue and what was its operating margin?",
+    "expected_answer": "The Technology Solutions segment contributed the most to ACME's revenue with $68.2 billion (54% of total revenue) and had an operating margin of 27.0%. This segment generated operating income of $18.4 billion and grew 8.2% year-over-year.",
+    "ground_truth_numbers": {
+      "revenue": 68.2,
+      "margin": 27.0,
+      "operating_income": 18.4
+    },
+    "documents_needed": ["acme_corp_10k_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval", "comparison"]
+  },
+  {
+    "id": "acme_fcf_004",
+    "question": "What was ACME's free cash flow for 2023 and how was it calculated?",
+    "expected_answer": "ACME's free cash flow for 2023 was $15.8 billion, calculated as operating cash flow of $28.1 billion minus capital expenditures of $12.3 billion.",
+    "ground_truth_numbers": {
+      "free_cash_flow": 15.8,
+      "operating_cash_flow": 28.1,
+      "capex": 12.3
+    },
+    "documents_needed": ["acme_corp_10k_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["calculation", "factual_retrieval"]
+  },
+  {
+    "id": "acme_rd_005",
+    "question": "How much did ACME invest in R&D as a percentage of revenue in 2023?",
+    "expected_answer": "ACME invested $14.2 billion in R&D during fiscal 2023, representing 11.3% of total revenue. This increased from $13.1 billion (11.1% of revenue) in fiscal 2022.",
+    "ground_truth_numbers": {
+      "rd_amount": 14.2,
+      "rd_percentage": 11.3
+    },
+    "documents_needed": ["acme_corp_10k_2023.md"],
+    "difficulty": "easy",
+    "required_capabilities": ["factual_retrieval"]
+  },
+  {
+    "id": "techcorp_q4_revenue_006",
+    "question": "What was TechCorp's total revenue in Q4 2023 and what was the year-over-year growth rate?",
+    "expected_answer": "TechCorp's total revenue in Q4 2023 was $42.8 billion, growing 15.1% year-over-year from $37.2 billion in Q4 2022.",
+    "ground_truth_numbers": {
+      "q4_2023_revenue": 42.8,
+      "q4_2022_revenue": 37.2,
+      "yoy_growth": 15.1
+    },
+    "documents_needed": ["techcorp_q4_2023_earnings.md"],
+    "difficulty": "easy",
+    "required_capabilities": ["factual_retrieval"]
+  },
+  {
+    "id": "techcorp_cloud_007",
+    "question": "How did TechCorp's Cloud Computing division perform in Q4 2023?",
+    "expected_answer": "TechCorp's Cloud Computing division generated $18.5 billion in revenue in Q4 2023, growing 21.7% year-over-year from $15.2 billion. The division had 2.8 million active customers with a dollar-based net retention rate of 124% and an operating margin of 38.5%.",
+    "ground_truth_numbers": {
+      "revenue": 18.5,
+      "growth": 21.7,
+      "customers": 2.8,
+      "retention": 124,
+      "margin": 38.5
+    },
+    "documents_needed": ["techcorp_q4_2023_earnings.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval", "multi_doc_retrieval"]
+  },
+  {
+    "id": "techcorp_segments_008",
+    "question": "Compare TechCorp's Cloud Computing and Hardware segment growth rates in Q4 2023.",
+    "expected_answer": "TechCorp's Cloud Computing segment grew 21.7% year-over-year to $18.5 billion, while the Hardware segment grew more modestly at 5.9% to $7.2 billion. Cloud Computing significantly outpaced Hardware, reflecting the shift toward cloud services, though Hardware improved its operating margin to 18.2%.",
+    "ground_truth_numbers": {
+      "cloud_growth": 21.7,
+      "cloud_revenue": 18.5,
+      "hardware_growth": 5.9,
+      "hardware_revenue": 7.2
+    },
+    "documents_needed": ["techcorp_q4_2023_earnings.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["comparison", "calculation"]
+  },
+  {
+    "id": "techcorp_fy_009",
+    "question": "What was TechCorp's full year 2023 EPS and how did it compare to 2022?",
+    "expected_answer": "TechCorp's diluted EPS for full year 2023 was $10.85, up 17.4% from $9.24 in 2022. Net income was $43.2 billion on revenue of $158.3 billion.",
+    "ground_truth_numbers": {
+      "eps_2023": 10.85,
+      "eps_2022": 9.24,
+      "growth": 17.4,
+      "net_income": 43.2
+    },
+    "documents_needed": ["techcorp_q4_2023_earnings.md"],
+    "difficulty": "easy",
+    "required_capabilities": ["factual_retrieval"]
+  },
+  {
+    "id": "techcorp_fcf_010",
+    "question": "What was TechCorp's free cash flow in Q4 2023 and what was the free cash flow margin?",
+    "expected_answer": "TechCorp generated free cash flow of $9.8 billion in Q4 2023, with a free cash flow margin of 22.9%. This represented a significant improvement from 21.1% in Q4 2022. Free cash flow was calculated as operating cash flow of $12.8 billion minus capital expenditures of $3.0 billion.",
+    "ground_truth_numbers": {
+      "fcf": 9.8,
+      "fcf_margin": 22.9,
+      "operating_cf": 12.8,
+      "capex": 3.0
+    },
+    "documents_needed": ["techcorp_q4_2023_earnings.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval", "calculation"]
+  },
+  {
+    "id": "globalbank_roe_011",
+    "question": "What was GlobalBank's return on equity (ROE) in 2023?",
+    "expected_answer": "GlobalBank's return on equity (ROE) in 2023 was 14.2%. The bank also achieved a return on tangible common equity (ROTCE) of 16.8% and a return on assets (ROA) of 0.89%.",
+    "ground_truth_numbers": {
+      "roe": 14.2,
+      "rotce": 16.8,
+      "roa": 0.89
+    },
+    "documents_needed": ["globalbank_annual_report_2023.md"],
+    "difficulty": "easy",
+    "required_capabilities": ["factual_retrieval"]
+  },
+  {
+    "id": "globalbank_net_income_012",
+    "question": "What was GlobalBank's net income in 2023 and how did it compare to 2022?",
+    "expected_answer": "GlobalBank's net income in 2023 was $18.2 billion, up 8.3% from $16.8 billion in 2022. This was achieved on total revenue of $81.1 billion.",
+    "ground_truth_numbers": {
+      "net_income_2023": 18.2,
+      "net_income_2022": 16.8,
+      "growth": 8.3,
+      "revenue": 81.1
+    },
+    "documents_needed": ["globalbank_annual_report_2023.md"],
+    "difficulty": "easy",
+    "required_capabilities": ["factual_retrieval", "comparison"]
+  },
+  {
+    "id": "globalbank_capital_013",
+    "question": "What was GlobalBank's Common Equity Tier 1 (CET1) ratio as of December 31, 2023?",
+    "expected_answer": "GlobalBank's Common Equity Tier 1 (CET1) ratio was 13.8% as of December 31, 2023, well above the regulatory minimum requirement of 7.0% (which includes a 2.5% buffer). The bank's Tier 1 Capital Ratio was 15.2% and Total Capital Ratio was 17.9%.",
+    "ground_truth_numbers": {
+      "cet1": 13.8,
+      "tier1": 15.2,
+      "total_capital": 17.9,
+      "regulatory_min": 7.0
+    },
+    "documents_needed": ["globalbank_annual_report_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval"]
+  },
+  {
+    "id": "globalbank_segments_014",
+    "question": "Which business segment contributed the most to GlobalBank's net income in 2023?",
+    "expected_answer": "Consumer Banking contributed the most to GlobalBank's net income with $8.4 billion, up 12% year-over-year. This was followed by Commercial Banking at $6.8 billion (+6% YoY), Wealth Management at $2.1 billion (+15% YoY), and Investment Banking at $900 million (-8% YoY).",
+    "ground_truth_numbers": {
+      "consumer_banking": 8.4,
+      "commercial_banking": 6.8,
+      "wealth_management": 2.1,
+      "investment_banking": 0.9
+    },
+    "documents_needed": ["globalbank_annual_report_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval", "comparison"]
+  },
+  {
+    "id": "globalbank_efficiency_015",
+    "question": "What was GlobalBank's efficiency ratio in 2023 and how did it improve from 2022?",
+    "expected_answer": "GlobalBank's efficiency ratio improved to 59.6% in 2023 from 62.2% in 2022. This represented a 260 basis point improvement. Non-interest expenses were $48.3 billion on total revenue of $81.1 billion.",
+    "ground_truth_numbers": {
+      "efficiency_2023": 59.6,
+      "efficiency_2022": 62.2,
+      "expenses": 48.3,
+      "revenue": 81.1
+    },
+    "documents_needed": ["globalbank_annual_report_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval", "calculation"]
+  },
+  {
+    "id": "comparison_margins_016",
+    "question": "Compare the operating margins of ACME and TechCorp in 2023.",
+    "expected_answer": "ACME had an operating margin of 19.6% for full year 2023 with operating income of $24.6 billion. TechCorp had a higher operating margin of 32.7% for full year 2023 with operating income of $51.8 billion, demonstrating significantly better operational efficiency despite both companies being in the technology sector.",
+    "ground_truth_numbers": {
+      "acme_margin": 19.6,
+      "techcorp_margin": 32.7,
+      "acme_operating_income": 24.6,
+      "techcorp_operating_income": 51.8
+    },
+    "documents_needed": ["acme_corp_10k_2023.md", "techcorp_q4_2023_earnings.md"],
+    "difficulty": "hard",
+    "required_capabilities": ["comparison", "multi_doc_retrieval", "calculation"]
+  },
+  {
+    "id": "acme_quarterly_016",
+    "question": "What was ACME's strongest quarter in 2023 by revenue?",
+    "expected_answer": "ACME's strongest quarter in 2023 by revenue was Q3 with $32.1 billion in revenue and $5.6 billion in net income (EPS of $1.41). This was followed closely by Q4 at $32.3 billion. Q3 was driven by strong demand in the Technology Solutions segment and successful new product launches.",
+    "ground_truth_numbers": {
+      "q3_revenue": 32.1,
+      "q3_net_income": 5.6,
+      "q3_eps": 1.41,
+      "q4_revenue": 32.3
+    },
+    "documents_needed": ["acme_corp_10k_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval", "comparison"]
+  },
+  {
+    "id": "techcorp_guidance_017",
+    "question": "What is TechCorp's revenue guidance for full year 2024?",
+    "expected_answer": "TechCorp's revenue guidance for full year 2024 is $178 billion to $184 billion, representing 12% to 16% growth from 2023. The company also expects an operating margin of 33% to 34%, diluted EPS of $11.80 to $12.40, and free cash flow of $38 billion to $42 billion.",
+    "ground_truth_numbers": {
+      "revenue_low": 178,
+      "revenue_high": 184,
+      "growth_low": 12,
+      "growth_high": 16,
+      "eps_low": 11.80,
+      "eps_high": 12.40
+    },
+    "documents_needed": ["techcorp_q4_2023_earnings.md"],
+    "difficulty": "easy",
+    "required_capabilities": ["factual_retrieval"]
+  },
+  {
+    "id": "globalbank_deposits_018",
+    "question": "What was GlobalBank's total deposit base and what percentage was insured?",
+    "expected_answer": "GlobalBank had total deposits of $1,642.8 billion as of December 31, 2023. Of these deposits, 48% were insured and 52% were uninsured, with operational deposits representing 78% of the total.",
+    "ground_truth_numbers": {
+      "total_deposits": 1642.8,
+      "insured_pct": 48,
+      "uninsured_pct": 52,
+      "operational_pct": 78
+    },
+    "documents_needed": ["globalbank_annual_report_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval"]
+  },
+  {
+    "id": "acme_debt_019",
+    "question": "What was ACME's debt-to-equity ratio as of December 31, 2023?",
+    "expected_answer": "ACME's debt-to-equity ratio was 0.38 as of December 31, 2023. The company had long-term debt of $28.5 billion and total shareholders' equity of $75.8 billion, indicating a conservative capital structure.",
+    "ground_truth_numbers": {
+      "debt_to_equity": 0.38,
+      "long_term_debt": 28.5,
+      "equity": 75.8
+    },
+    "documents_needed": ["acme_corp_10k_2023.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval", "calculation"]
+  },
+  {
+    "id": "techcorp_ai_020",
+    "question": "How much revenue did TechCorp's AI platform generate in Q4 2023?",
+    "expected_answer": "TechCorp's AI platform generated $2.1 billion in revenue in Q4 2023, with 450,000 active API customers and 127 billion API calls processed. The platform achieved a 71% gross margin and is expected to contribute $12-15 billion in FY 2024.",
+    "ground_truth_numbers": {
+      "ai_revenue": 2.1,
+      "customers": 450000,
+      "api_calls": 127,
+      "margin": 71,
+      "fy2024_target_low": 12,
+      "fy2024_target_high": 15
+    },
+    "documents_needed": ["techcorp_q4_2023_earnings.md"],
+    "difficulty": "medium",
+    "required_capabilities": ["factual_retrieval"]
+  }
+]

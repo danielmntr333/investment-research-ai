@@ -1,0 +1,926 @@
+[
+  {
+    "test_id": "acme_revenue_001",
+    "question": "What was ACME Corporation's total revenue in fiscal year 2023?",
+    "expected_answer": "ACME Corporation's total revenue in fiscal year 2023 was $125.4 billion, compared to $118.2 billion in 2022, representing a year-over-year growth of 6.1%.",
+    "generated_answer": "ACME Corporation's total revenue for the fiscal year ended December 31, 2023, was $125.4 billion [Source 4].",
+    "difficulty": "easy",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "ACME invested $14.2 billion in R&D during fiscal 2023, representing 11.3% of total revenue. This compares to $13.1\nbillion (11.1% of revenue) in fiscal 2022....",
+        "relevance_score": 0
+      },
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\n6. Foreign Exchange: Currency fluctuations impact international revenue (35% of total revenue from internation...",
+        "relevance_score": 0
+      },
+      {
+        "content": "ACME Corporation\nAnnual Report (Form 10-K)...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9804809538511572,
+      "context_precision": 0.249999999975,
+      "context_recall": 1.0,
+      "answer_correctness": 0.6185844987872482
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.0,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 5,
+      "completeness": 4,
+      "clarity": 5,
+      "citation_quality": 4,
+      "overall": 4,
+      "reasoning": "The answer is factually correct and matches the reference answer regarding total revenue. However, it lacks the year-over-year comparison and growth percentage, which would enhance completeness. The answer is clear and well-structured, and while it cites a source, it could be improved by providing more context or additional citations."
+    },
+    "overall_score": 0.5079252362090725
+  },
+  {
+    "test_id": "acme_margins_002",
+    "question": "What was ACME's gross profit margin in 2023?",
+    "expected_answer": "ACME's gross profit margin in 2023 was 45.2%, which improved from 44.7% in 2022. The gross profit was $56.7 billion on revenue of $125.4 billion.",
+    "generated_answer": "The provided context does not include specific information about ACME's gross profit margin for fiscal 2023. Therefore, I cannot provide an answer regarding ACME's gross profit margin.",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "ACME invested $14.2 billion in R&D during fiscal 2023, representing 11.3% of total revenue. This compares to $13.1\nbillion (11.1% of revenue) in fiscal 2022....",
+        "relevance_score": 0
+      },
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\n6. Foreign Exchange: Currency fluctuations impact international revenue (35% of total revenue from internation...",
+        "relevance_score": 0
+      },
+      {
+        "content": "$31.2B\n+13.5%\nFull Year Margins:\nGross margin: 65.8%\nOperating margin: 32.7%\nNet margin: 27.3%\nAI Platform Performance\nOur AI platform, launched in Q2 2023, exceeded expectations:\nQ4 2023 Metrics:\nRev...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_correctness": 0.21629386821227123
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.16666666666666666,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 1,
+      "clarity": 4,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The answer is factually incorrect as it fails to provide the gross profit margin for ACME in 2023, which is explicitly stated in the reference answer. It is also incomplete as it does not address the question at all. While the response is clear in its structure, it lacks any citations to support its claims, resulting in a very low overall quality."
+    },
+    "overall_score": 0.09647017612364836
+  },
+  {
+    "test_id": "acme_segments_003",
+    "question": "Which business segment contributed the most to ACME's revenue and what was its operating margin?",
+    "expected_answer": "The Technology Solutions segment contributed the most to ACME's revenue with $68.2 billion (54% of total revenue) and had an operating margin of 27.0%. This segment generated operating income of $18.4 billion and grew 8.2% year-over-year.",
+    "generated_answer": "The provided context does not specify the individual business segments of ACME Corporation or their respective contributions to revenue and operating margins. Therefore, I cannot determine which business segment contributed the most to ACME's revenue or its operating margin based on the available information.",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "ACME invested $14.2 billion in R&D during fiscal 2023, representing 11.3% of total revenue. This compares to $13.1\nbillion (11.1% of revenue) in fiscal 2022....",
+        "relevance_score": 0
+      },
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\n6. Foreign Exchange: Currency fluctuations impact international revenue (35% of total revenue from internation...",
+        "relevance_score": 0
+      },
+      {
+        "content": "ACME Corporation\nAnnual Report (Form 10-K)...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.3333333333,
+      "context_recall": 0.0,
+      "answer_correctness": 0.21548942826621179
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.0,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 1,
+      "clarity": 4,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The generated answer is completely incorrect as it fails to provide any factual information regarding ACME's business segments, their revenue contributions, or operating margins. It does not address the question at all, making it significantly incomplete. While the answer is clear in its expression, it lacks any relevant content. Additionally, there are no citations provided to support the claims made."
+    },
+    "overall_score": 0.17390582092529694
+  },
+  {
+    "test_id": "acme_fcf_004",
+    "question": "What was ACME's free cash flow for 2023 and how was it calculated?",
+    "expected_answer": "ACME's free cash flow for 2023 was $15.8 billion, calculated as operating cash flow of $28.1 billion minus capital expenditures of $12.3 billion.",
+    "generated_answer": "ACME's free cash flow for fiscal year 2023 was $35.4 billion. This figure is derived from the operating cash flow minus capital expenditures. \n\nIn the context provided, the operating cash flow for Q4 2023 was reported as $12.8 billion, and the capital expenditures for the full year were $3.0 billion. However, the total free cash flow for the year is stated directly as $35.4 billion, which indicates that this amount encompasses the entire fiscal year’s performance rather than just Q4.\n\nThe calculation for free cash flow typically follows this formula:\n\n\\[ \\text{Free Cash Flow} = \\text{Operating Cash Flow} - \\text{Capital Expenditures} \\]\n\nWhile the specific operating cash flow for the entire year is not provided, the reported free cash flow of $35.4 billion reflects the overall cash generated after accounting for capital expenditures throughout the fiscal year 2023. \n\nThus, the free cash flow for ACME in 2023 was $35.4 billion, representing a 13.5% increase from $31.2 billion in 2022 [Source 4].",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "ACME invested $14.2 billion in R&D during fiscal 2023, representing 11.3% of total revenue. This compares to $13.1\nbillion (11.1% of revenue) in fiscal 2022....",
+        "relevance_score": 0
+      },
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\n6. Foreign Exchange: Currency fluctuations impact international revenue (35% of total revenue from internation...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Free cash flow of $9.8 billion, up 18% year-over-year\nFinancial Results\nRevenue Breakdown (Q4 2023)...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 0.18181818181818182,
+      "answer_relevancy": 0.9672394433256803,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_correctness": 0.3465628826157005
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.25,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 2,
+      "clarity": 4,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The answer is factually incorrect as it states ACME's free cash flow for 2023 as $35.4 billion, while the reference indicates it was $15.8 billion. The answer does not provide the correct operating cash flow and capital expenditures, leading to a significant error in the calculation. It partially addresses the question but lacks accurate details and proper citations, resulting in a low overall score."
+    },
+    "overall_score": 0.213399640620765
+  },
+  {
+    "test_id": "acme_rd_005",
+    "question": "How much did ACME invest in R&D as a percentage of revenue in 2023?",
+    "expected_answer": "ACME invested $14.2 billion in R&D during fiscal 2023, representing 11.3% of total revenue. This increased from $13.1 billion (11.1% of revenue) in fiscal 2022.",
+    "generated_answer": "ACME invested $14.2 billion in R&D during fiscal 2023, which represented 11.3% of total revenue for that year. This is an increase from the previous fiscal year, where the company invested $13.1 billion, or 11.1% of revenue in fiscal 2022 [Source 1].",
+    "difficulty": "easy",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "ACME invested $14.2 billion in R&D during fiscal 2023, representing 11.3% of total revenue. This compares to $13.1\nbillion (11.1% of revenue) in fiscal 2022....",
+        "relevance_score": 0
+      },
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\n6. Foreign Exchange: Currency fluctuations impact international revenue (35% of total revenue from internation...",
+        "relevance_score": 0
+      },
+      {
+        "content": "ACME Corporation\nAnnual Report (Form 10-K)...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9692164963853552,
+      "context_precision": 0.9999999999,
+      "context_recall": 0.5,
+      "answer_correctness": 0.8111553491235086
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 1.0,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "clarity": 5,
+      "citation_quality": 4,
+      "overall": 5,
+      "reasoning": "The answer is factually correct, fully addresses the question, is clear and well-structured. It cites the previous year's data but could improve by specifying the source for the current year's figures."
+    },
+    "overall_score": 0.7674297476327091
+  },
+  {
+    "test_id": "techcorp_q4_revenue_006",
+    "question": "What was TechCorp's total revenue in Q4 2023 and what was the year-over-year growth rate?",
+    "expected_answer": "TechCorp's total revenue in Q4 2023 was $42.8 billion, growing 15.1% year-over-year from $37.2 billion in Q4 2022.",
+    "generated_answer": "The provided context does not contain specific information regarding TechCorp's total revenue in Q4 2023 or the year-over-year growth rate. Therefore, I cannot provide those details.",
+    "difficulty": "easy",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "TechCorp Inc.\nQ4 2023 Earnings Report...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.9999999999666667,
+      "context_recall": 0.0,
+      "answer_correctness": 0.21687718161709224
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.2857142857142857,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 1,
+      "clarity": 4,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The generated answer is completely incorrect as it fails to provide any factual information regarding TechCorp's total revenue or growth rate, which are explicitly stated in the reference answer. It is also incomplete as it does not address the question at all. While the answer is clear in its expression, it lacks any relevant content. Additionally, there are no citations provided to support the claims made."
+    },
+    "overall_score": 0.27735017452670074
+  },
+  {
+    "test_id": "techcorp_cloud_007",
+    "question": "How did TechCorp's Cloud Computing division perform in Q4 2023?",
+    "expected_answer": "TechCorp's Cloud Computing division generated $18.5 billion in revenue in Q4 2023, growing 21.7% year-over-year from $15.2 billion. The division had 2.8 million active customers with a dollar-based net retention rate of 124% and an operating margin of 38.5%.",
+    "generated_answer": "In Q4 2023, TechCorp's Cloud Computing division generated revenue of $18.5 billion, which represents a year-over-year growth of 21.7% compared to $15.2 billion in Q4 2022. This strong performance contributed significantly to the overall revenue growth of the company, which totaled $42.8 billion for the quarter, reflecting a 15.1% increase from the previous year [Source 4].",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "TechCorp Inc.\nQ4 2023 Earnings Report...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 0.6666666666666666,
+      "answer_relevancy": 0.9658039879639161,
+      "context_precision": 0.8041666666465626,
+      "context_recall": 0.5,
+      "answer_correctness": 0.8434682057743976
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.25,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 4,
+      "completeness": 3,
+      "clarity": 4,
+      "citation_quality": 3,
+      "overall": 3,
+      "reasoning": "The answer is mostly correct, with accurate revenue figures and growth percentage, but it lacks details about active customers and operating margin, which are important aspects of the performance. The answer is clear and well-structured, but the citation is not specific enough to support all claims."
+    },
+    "overall_score": 0.4961584421641234
+  },
+  {
+    "test_id": "techcorp_segments_008",
+    "question": "Compare TechCorp's Cloud Computing and Hardware segment growth rates in Q4 2023.",
+    "expected_answer": "TechCorp's Cloud Computing segment grew 21.7% year-over-year to $18.5 billion, while the Hardware segment grew more modestly at 5.9% to $7.2 billion. Cloud Computing significantly outpaced Hardware, reflecting the shift toward cloud services, though Hardware improved its operating margin to 18.2%.",
+    "generated_answer": "In Q4 2023, TechCorp's Cloud Computing segment reported a revenue of $18.5 billion, which represents a year-over-year growth rate of +21.7%. In contrast, the Hardware segment generated $7.2 billion in revenue, with a year-over-year growth rate of +5.9%. \n\nThus, the Cloud Computing segment significantly outperformed the Hardware segment in terms of growth rate during this quarter, with a difference of 15.8 percentage points in growth rates. [Source 2]",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "## Cautionary Statement\n\nSegment\nQ4 2023 Q4 2022 YoY Growth\nCloud Computing\n$18.5B\n$15.2B\n+21.7%\nSoftware & Services $14.8B\n$13.1B\n+13.0%\nHardware\n$7.2B\n$6.8B\n+5.9%\nAdvertising\n$2.3B\n$2.1B\n+9.5%\nTotal...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Segment\nQ4 2023 Q4 2022 YoY Growth\nCloud Computing\n$18.5B\n$15.2B\n+21.7%\nSoftware & Services $14.8B\n$13.1B\n+13.0%\nHardware\n$7.2B\n$6.8B\n+5.9%\nAdvertising\n$2.3B\n$2.1B\n+9.5%\nTotal Revenue\n$42.8B\n$37.2B\n+1...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9565067163037048,
+      "context_precision": 0.8666666666377778,
+      "context_recall": 0.5,
+      "answer_correctness": 0.8844337708140592
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.0,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "clarity": 5,
+      "citation_quality": 4,
+      "overall": 5,
+      "reasoning": "The answer accurately presents the growth rates and revenue figures for both segments, fully addressing the question. It is clear and well-structured. However, it lacks a specific citation for the claim about the operating margin of the Hardware segment, which is mentioned in the reference answer."
+    },
+    "overall_score": 0.5866085723004434
+  },
+  {
+    "test_id": "techcorp_fy_009",
+    "question": "What was TechCorp's full year 2023 EPS and how did it compare to 2022?",
+    "expected_answer": "TechCorp's diluted EPS for full year 2023 was $10.85, up 17.4% from $9.24 in 2022. Net income was $43.2 billion on revenue of $158.3 billion.",
+    "generated_answer": "The provided context does not contain information regarding TechCorp's full year 2023 EPS or how it compared to 2022. It only mentions the EPS for Q4 2023, which was $2.94, up 24% from Q4 2022, but does not provide full year figures. Therefore, I cannot answer the question based on the available information.",
+    "difficulty": "easy",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "TechCorp Inc.\nQ4 2023 Earnings Report...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.3333333333,
+      "context_recall": 0.0,
+      "answer_correctness": 0.4989649005424279
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.14285714285714285,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 2,
+      "clarity": 4,
+      "citation_quality": 2,
+      "overall": 1,
+      "reasoning": "The answer is factually incorrect as it fails to provide the full year EPS for 2023 and its comparison to 2022, which are critical to the question. It is significantly incomplete as it only mentions Q4 EPS without addressing the full year figures. The clarity is relatively good, but the lack of information detracts from its overall effectiveness. The citations are minimal, as it does not reference the full year EPS data."
+    },
+    "overall_score": 0.22158385870739422
+  },
+  {
+    "test_id": "techcorp_fcf_010",
+    "question": "What was TechCorp's free cash flow in Q4 2023 and what was the free cash flow margin?",
+    "expected_answer": "TechCorp generated free cash flow of $9.8 billion in Q4 2023, with a free cash flow margin of 22.9%. This represented a significant improvement from 21.1% in Q4 2022. Free cash flow was calculated as operating cash flow of $12.8 billion minus capital expenditures of $3.0 billion.",
+    "generated_answer": "TechCorp's free cash flow in Q4 2023 was $9.8 billion, with a free cash flow margin of 22.9% [Source 4].",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "TechCorp Inc.\nQ4 2023 Earnings Report...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.9666903702708546,
+      "context_precision": 0.3333333333,
+      "context_recall": 0.25,
+      "answer_correctness": 0.745415350308259
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.1111111111111111,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 5,
+      "completeness": 4,
+      "clarity": 5,
+      "citation_quality": 4,
+      "overall": 4,
+      "reasoning": "The answer is factually correct regarding the free cash flow and margin. It is mostly complete but lacks the year-over-year comparison mentioned in the reference answer. The clarity is high, and the citation is appropriate, though it could have included more context from the source."
+    },
+    "overall_score": 0.4430795687547735
+  },
+  {
+    "test_id": "globalbank_roe_011",
+    "question": "What was GlobalBank's return on equity (ROE) in 2023?",
+    "expected_answer": "GlobalBank's return on equity (ROE) in 2023 was 14.2%. The bank also achieved a return on tangible common equity (ROTCE) of 16.8% and a return on assets (ROA) of 0.89%.",
+    "generated_answer": "GlobalBank's return on equity (ROE) in 2023 was 14.2% [Source 5].",
+    "difficulty": "easy",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "GlobalBank Financial\nServices\nAnnual Report 2023\nBuilding a Stronger, More Resilient Bank\nLetter to Shareholders\nDear Shareholders,\n2023 was a year of strategic execution and resilience for GlobalBank...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## Cautionary Statement\n\nThis annual report contains forward-looking statements that involve risks and uncertainties. Actual results may differ\nmaterially due to various factors including economic con...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\nSocial Initiatives\nDiversity: 41% of workforce from underrepresented groups\nPay equity: Achieved 99.8% pay equ...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.999997476883337,
+      "context_precision": 0.6999999999766667,
+      "context_recall": 0.3333333333333333,
+      "answer_correctness": 0.616445788210976
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.5,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 5,
+      "completeness": 3,
+      "clarity": 4,
+      "citation_quality": 4,
+      "overall": 4,
+      "reasoning": "The answer is factually correct regarding GlobalBank's ROE in 2023. However, it lacks completeness as it does not mention other relevant metrics like ROTCE and ROA, which were included in the reference answer. The answer is clear and well-structured, and it cites a source, but it could improve by providing more context or additional figures."
+    },
+    "overall_score": 0.579482127872345
+  },
+  {
+    "test_id": "globalbank_net_income_012",
+    "question": "What was GlobalBank's net income in 2023 and how did it compare to 2022?",
+    "expected_answer": "GlobalBank's net income in 2023 was $18.2 billion, up 8.3% from $16.8 billion in 2022. This was achieved on total revenue of $81.1 billion.",
+    "generated_answer": "The provided context does not include information regarding GlobalBank's net income for 2023 or any comparison to 2022. Therefore, I cannot provide an answer to your question.",
+    "difficulty": "easy",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "GlobalBank Financial\nServices\nAnnual Report 2023\nBuilding a Stronger, More Resilient Bank\nLetter to Shareholders\nDear Shareholders,\n2023 was a year of strategic execution and resilience for GlobalBank...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## Cautionary Statement\n\nThis annual report contains forward-looking statements that involve risks and uncertainties. Actual results may differ\nmaterially due to various factors including economic con...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## Income Statement Summary\n\nDigital products: $2.8B\nCybersecurity: $1.5B\nData and analytics: $1.2B\nDigital Banking Metrics\nMobile App:\nDownloads: 45 million (cumulative)\nMonthly active users: 28 mill...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_correctness": 0.21111198880517573
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.16666666666666666,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 1,
+      "clarity": 3,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The generated answer is completely incorrect as it fails to provide any factual information regarding GlobalBank's net income for 2023 or its comparison to 2022. It does not address the question at all, making it significantly incomplete. The clarity is somewhat acceptable, but the lack of content affects the overall understanding. There are no citations provided, which further diminishes the quality."
+    },
+    "overall_score": 0.17605562577108075
+  },
+  {
+    "test_id": "globalbank_capital_013",
+    "question": "What was GlobalBank's Common Equity Tier 1 (CET1) ratio as of December 31, 2023?",
+    "expected_answer": "GlobalBank's Common Equity Tier 1 (CET1) ratio was 13.8% as of December 31, 2023, well above the regulatory minimum requirement of 7.0% (which includes a 2.5% buffer). The bank's Tier 1 Capital Ratio was 15.2% and Total Capital Ratio was 17.9%.",
+    "generated_answer": "GlobalBank's Common Equity Tier 1 (CET1) ratio as of December 31, 2023, was 13.8% [Source 3][Source 5].",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "## Income Statement Summary\n\nCET1\n4.5%\n2.5%\n7.0%\n13.8%\n+6.8%\nTier 1\n6.0%\n2.5%\n8.5%\n15.2%\n+6.7%\nTotal Capital\n8.0%\n2.5%\n10.5%\n17.9%\n+7.4%\nStress Testing\n2023 CCAR Results:\nSeverely adverse scenario: CE...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## Income Statement Summary\n\nQ1 2023: 0.58%\nQ2 2023: 0.62%\nQ3 2023: 0.65%\nQ4 2023: 0.68%\nNet Charge-Off Rate:\n2023: 0.47%\n2022: 0.38%\n2021: 0.32%\nModest increase in charge-offs reflects normalization ...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## Income Statement Summary\n\nAverage sessions per user: 14.2/month\nCustomer satisfaction score: 4.7/5.0\nDigital Capabilities:\nMobile check deposit limit: $10,000\nPerson-to-person payments: Zelle integ...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.9999999999999988,
+      "context_precision": 0.9999999999,
+      "context_recall": 1.0,
+      "answer_correctness": 0.49215934883676976
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.2,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 5,
+      "completeness": 4,
+      "clarity": 5,
+      "citation_quality": 4,
+      "overall": 4,
+      "reasoning": "The answer is factually correct regarding the CET1 ratio. It is mostly complete but lacks additional context about the regulatory minimum and other capital ratios mentioned in the reference answer. The clarity is high, and the citations are mostly adequate, though specific details from the sources could enhance the answer."
+    },
+    "overall_score": 0.5143727478989415
+  },
+  {
+    "test_id": "globalbank_segments_014",
+    "question": "Which business segment contributed the most to GlobalBank's net income in 2023?",
+    "expected_answer": "Consumer Banking contributed the most to GlobalBank's net income with $8.4 billion, up 12% year-over-year. This was followed by Commercial Banking at $6.8 billion (+6% YoY), Wealth Management at $2.1 billion (+15% YoY), and Investment Banking at $900 million (-8% YoY).",
+    "generated_answer": "The context does not specify which specific business segment contributed the most to GlobalBank's net income in 2023. It only mentions that the Consumer Banking division delivered strong results driven by higher interest rates and continued deposit growth, but does not provide a breakdown of net income contributions by segment. Therefore, I cannot determine which segment contributed the most to the net income based on the provided information.",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "GlobalBank Financial\nServices\nAnnual Report 2023\nBuilding a Stronger, More Resilient Bank\nLetter to Shareholders\nDear Shareholders,\n2023 was a year of strategic execution and resilience for GlobalBank...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## Income Statement Summary\n\nDigital products: $2.8B\nCybersecurity: $1.5B\nData and analytics: $1.2B\nDigital Banking Metrics\nMobile App:\nDownloads: 45 million (cumulative)\nMonthly active users: 28 mill...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Net Income: $8.4 billion (+12% YoY)\nOur Consumer Banking division delivered strong results driven by higher interest rates and continued deposit growth....",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.4166666666458333,
+      "context_recall": 0.5,
+      "answer_correctness": 0.42881544002400224
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.0,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 2,
+      "clarity": 4,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The generated answer is factually incorrect as it fails to identify Consumer Banking as the segment that contributed the most to net income. It is also incomplete as it does not provide any specific figures or comparisons. While the answer is clear in its structure, it lacks the necessary information to be considered correct or complete. Additionally, there are no citations provided to support the claims made."
+    },
+    "overall_score": 0.23763856853358684
+  },
+  {
+    "test_id": "globalbank_efficiency_015",
+    "question": "What was GlobalBank's efficiency ratio in 2023 and how did it improve from 2022?",
+    "expected_answer": "GlobalBank's efficiency ratio improved to 59.6% in 2023 from 62.2% in 2022. This represented a 260 basis point improvement. Non-interest expenses were $48.3 billion on total revenue of $81.1 billion.",
+    "generated_answer": "The provided context does not contain any information regarding GlobalBank's efficiency ratio for 2023 or any comparison to 2022. Therefore, I cannot provide an answer to your question.",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "GlobalBank Financial\nServices\nAnnual Report 2023\nBuilding a Stronger, More Resilient Bank\nLetter to Shareholders\nDear Shareholders,\n2023 was a year of strategic execution and resilience for GlobalBank...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## Income Statement Summary\n\nAverage sessions per user: 14.2/month\nCustomer satisfaction score: 4.7/5.0\nDigital Capabilities:\nMobile check deposit limit: $10,000\nPerson-to-person payments: Zelle integ...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\nSocial Initiatives\nDiversity: 41% of workforce from underrepresented groups\nPay equity: Achieved 99.8% pay equ...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_correctness": 0.20880139965279493
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.14285714285714285,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 1,
+      "clarity": 3,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The generated answer is factually incorrect as it does not provide any information about GlobalBank's efficiency ratio for 2023 or its improvement from 2022. It is also incomplete as it fails to address the question. The clarity is somewhat acceptable, but the lack of relevant information detracts from its overall effectiveness. There are no citations provided."
+    },
+    "overall_score": 0.1717041119722236
+  },
+  {
+    "test_id": "comparison_margins_016",
+    "question": "Compare the operating margins of ACME and TechCorp in 2023.",
+    "expected_answer": "ACME had an operating margin of 19.6% for full year 2023 with operating income of $24.6 billion. TechCorp had a higher operating margin of 32.7% for full year 2023 with operating income of $51.8 billion, demonstrating significantly better operational efficiency despite both companies being in the technology sector.",
+    "generated_answer": "The provided context does not contain specific information regarding the operating margins of ACME and TechCorp for 2023. Therefore, I cannot provide a comparison of their operating margins based on the available information.",
+    "difficulty": "hard",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "TechCorp Inc.\nQ4 2023 Earnings Report...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_correctness": 0.21553504930965478
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.0,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 1,
+      "clarity": 3,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The answer is completely incorrect as it fails to provide any factual information regarding the operating margins of ACME and TechCorp, which are explicitly stated in the reference answer. It does not address the question at all, making it significantly incomplete. While the answer is clear in its structure, the lack of relevant content affects its overall clarity. There are no citations provided, which further diminishes its quality."
+    },
+    "overall_score": 0.1472428039447724
+  },
+  {
+    "test_id": "acme_quarterly_016",
+    "question": "What was ACME's strongest quarter in 2023 by revenue?",
+    "expected_answer": "ACME's strongest quarter in 2023 by revenue was Q3 with $32.1 billion in revenue and $5.6 billion in net income (EPS of $1.41). This was followed closely by Q4 at $32.3 billion. Q3 was driven by strong demand in the Technology Solutions segment and successful new product launches.",
+    "generated_answer": "ACME's strongest quarter in 2023 by revenue was Q3 2023. This quarter was noted for achieving the highest quarterly revenue to date, driven by strong demand in the Technology Solutions segment and successful new product launches in the Consumer Products division [Source 4].",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\n6. Foreign Exchange: Currency fluctuations impact international revenue (35% of total revenue from internation...",
+        "relevance_score": 0
+      },
+      {
+        "content": "ACME invested $14.2 billion in R&D during fiscal 2023, representing 11.3% of total revenue. This compares to $13.1\nbillion (11.1% of revenue) in fiscal 2022....",
+        "relevance_score": 0
+      },
+      {
+        "content": "ACME Corporation\nAnnual Report (Form 10-K)...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 0.249999999975,
+      "context_recall": 0.3333333333333333,
+      "answer_correctness": 0.7420694544561475
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.25,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 4,
+      "completeness": 4,
+      "clarity": 4,
+      "citation_quality": 3,
+      "overall": 4,
+      "reasoning": "The answer is mostly correct, as it identifies Q3 as the strongest quarter but lacks specific revenue figures and net income details found in the reference answer. It is mostly complete but omits the revenue amount. The clarity is good, but the citation quality could be improved by providing more specific sources for the claims made."
+    },
+    "overall_score": 0.5097822230211585
+  },
+  {
+    "test_id": "techcorp_guidance_017",
+    "question": "What is TechCorp's revenue guidance for full year 2024?",
+    "expected_answer": "TechCorp's revenue guidance for full year 2024 is $178 billion to $184 billion, representing 12% to 16% growth from 2023. The company also expects an operating margin of 33% to 34%, diluted EPS of $11.80 to $12.40, and free cash flow of $38 billion to $42 billion.",
+    "generated_answer": "The provided context does not specify TechCorp's revenue guidance for the full year 2024. It only includes guidance for Q1 2024, which is projected to be between $43.5 billion and $44.5 billion, with a year-over-year growth of 13% to 16% [Source 4][Source 5]. Therefore, I cannot provide the revenue guidance for the full year 2024 based on the available information.",
+    "difficulty": "easy",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "TechCorp Inc.\nQ4 2023 Earnings Report...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.0,
+      "answer_correctness": 0.23331062729230437
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.08333333333333333,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 1,
+      "clarity": 4,
+      "citation_quality": 3,
+      "overall": 1,
+      "reasoning": "The generated answer is factually incorrect as it fails to provide the correct revenue guidance for full year 2024, which is explicitly stated in the reference answer. It is also incomplete as it does not address the full year guidance at all. While the answer is somewhat clear in its structure, it lacks the necessary information to be considered complete or correct. The citations provided are not relevant to the question asked."
+    },
+    "overall_score": 0.16324818351671772
+  },
+  {
+    "test_id": "globalbank_deposits_018",
+    "question": "What was GlobalBank's total deposit base and what percentage was insured?",
+    "expected_answer": "GlobalBank had total deposits of $1,642.8 billion as of December 31, 2023. Of these deposits, 48% were insured and 52% were uninsured, with operational deposits representing 78% of the total.",
+    "generated_answer": "The provided context does not contain specific information regarding GlobalBank's total deposit base or the percentage of insured deposits. Therefore, I cannot provide a detailed answer to your question.",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "## Income Statement Summary\n\nAverage sessions per user: 14.2/month\nCustomer satisfaction score: 4.7/5.0\nDigital Capabilities:\nMobile check deposit limit: $10,000\nPerson-to-person payments: Zelle integ...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## Income Statement Summary\n\nInsured deposits: 48% of total\nUninsured deposits: 52% of total\nOperational deposits: 78% of total\nEfficiency and Expense Management\nOperating Expenses\nTotal Non-Interest ...",
+        "relevance_score": 0
+      },
+      {
+        "content": "GlobalBank Financial\nServices\nAnnual Report 2023\nBuilding a Stronger, More Resilient Bank\nLetter to Shareholders\nDear Shareholders,\n2023 was a year of strategic execution and resilience for GlobalBank...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 0.3333333333333333,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.49999999995,
+      "context_recall": 0.6666666666666666,
+      "answer_correctness": 0.21295688402791838
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.0,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 1,
+      "clarity": 4,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The generated answer is factually incorrect as it does not provide any of the specific information requested about GlobalBank's total deposit base or the percentage of insured deposits. It is also incomplete as it fails to address the question. While the answer is clear in its structure, it lacks any citations or references to support its claims."
+    },
+    "overall_score": 0.1870365507182335
+  },
+  {
+    "test_id": "acme_debt_019",
+    "question": "What was ACME's debt-to-equity ratio as of December 31, 2023?",
+    "expected_answer": "ACME's debt-to-equity ratio was 0.38 as of December 31, 2023. The company had long-term debt of $28.5 billion and total shareholders' equity of $75.8 billion, indicating a conservative capital structure.",
+    "generated_answer": "The provided context does not include specific information about ACME Corporation's total liabilities or total shareholders' equity as of December 31, 2023. Therefore, I cannot calculate ACME's debt-to-equity ratio based on the available information.",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "Cash and short-term investments: $48.3 billion\nTotal current assets: $92.1 billion\nTotal assets: $285.4 billion\nLiabilities:\nTotal current liabilities: $38.7 billion\nLong-term debt: $32.5 billion\nTota...",
+        "relevance_score": 0
+      },
+      {
+        "content": "ACME Corporation\nAnnual Report (Form 10-K)...",
+        "relevance_score": 0
+      },
+      {
+        "content": "## 5. Economic Conditions: Macroeconomic headwinds may affect customer spending patterns\n\n6. Foreign Exchange: Currency fluctuations impact international revenue (35% of total revenue from internation...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.49999999995,
+      "context_recall": 0.0,
+      "answer_correctness": 0.21951306484506783
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.0,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 1,
+      "completeness": 2,
+      "clarity": 4,
+      "citation_quality": 1,
+      "overall": 1,
+      "reasoning": "The generated answer is factually incorrect as it fails to provide the actual debt-to-equity ratio of 0.38. It is incomplete because it does not address the question directly. The clarity is relatively good, but the lack of correct information detracts from its overall quality. There are no citations provided, which further lowers the score."
+    },
+    "overall_score": 0.18756104518360545
+  },
+  {
+    "test_id": "techcorp_ai_020",
+    "question": "How much revenue did TechCorp's AI platform generate in Q4 2023?",
+    "expected_answer": "TechCorp's AI platform generated $2.1 billion in revenue in Q4 2023, with 450,000 active API customers and 127 billion API calls processed. The platform achieved a 71% gross margin and is expected to contribute $12-15 billion in FY 2024.",
+    "generated_answer": "TechCorp's AI platform generated $2.1 billion in revenue during Q4 2023 [Source 3][Source 5].",
+    "difficulty": "medium",
+    "capabilities": [],
+    "num_sources": 5,
+    "sources": [
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "Quarter Ended December 31, 2023\nExecutive Summary\nTechCorp delivered strong Q4 2023 results, exceeding analyst expectations across all key metrics. The quarter was...",
+        "relevance_score": 0
+      },
+      {
+        "content": "$31.2B\n+13.5%\nFull Year Margins:\nGross margin: 65.8%\nOperating margin: 32.7%\nNet margin: 27.3%\nAI Platform Performance\nOur AI platform, launched in Q2 2023, exceeded expectations:\nQ4 2023 Metrics:\nRev...",
+        "relevance_score": 0
+      }
+    ],
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9999990219057965,
+      "context_precision": 0.4777777777618519,
+      "context_recall": 0.3333333333333333,
+      "answer_correctness": 0.6160640748055936
+    },
+    "custom_metrics": {
+      "numerical_accuracy": 0.3333333333333333,
+      "citation_rate": 0.0,
+      "citation_count": 0
+    },
+    "judge_scores": {
+      "correctness": 5,
+      "completeness": 3,
+      "clarity": 4,
+      "citation_quality": 3,
+      "overall": 4,
+      "reasoning": "The answer is factually correct regarding the revenue figure, matching the reference. However, it lacks additional context such as the number of active API customers and API calls processed, which are significant aspects of the platform's performance. The answer is clear and well-structured, but the citations could be more specific to enhance credibility."
+    },
+    "overall_score": 0.5325072699578595
+  }
+]
