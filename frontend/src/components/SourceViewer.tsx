@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import { X, ExternalLink, Globe, FileText } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 import { Button } from './ui/button';
 
@@ -11,6 +11,8 @@ export function SourceViewer() {
   const content = selectedSource.content_preview || selectedSource.content || '';
   const similarity = selectedSource.similarity ?? selectedSource.score ?? 0;
   const documentName = selectedSource.document_name || 'Unknown Document';
+  const isWebSource = selectedSource.source_type === 'web';
+  const SourceIcon = isWebSource ? Globe : FileText;
 
   return (
     <>
@@ -27,19 +29,37 @@ export function SourceViewer() {
           <div className="flex items-start justify-between mb-6">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
-                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-foreground/10 text-foreground font-bold text-sm flex-shrink-0">
+                <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm flex-shrink-0 ${
+                  isWebSource 
+                    ? 'bg-gradient-to-br from-purple-500 to-pink-600 text-white' 
+                    : 'bg-foreground/10 text-foreground'
+                }`}>
                   {selectedSource.source_number}
                 </span>
+                <SourceIcon className="w-5 h-5 text-muted-foreground flex-shrink-0" />
                 <h2 className="text-xl font-bold truncate">{documentName}</h2>
               </div>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <span>
-                  Relevance: <span className="font-medium text-foreground">{(similarity * 100).toFixed(1)}%</span>
-                </span>
-                {selectedSource.chunk_id && (
-                  <span className="text-xs">
-                    • Chunk: {selectedSource.chunk_id.slice(0, 8)}...
+              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-3">
+                  <span>
+                    Relevance: <span className="font-medium text-foreground">{(similarity * 100).toFixed(1)}%</span>
                   </span>
+                  {selectedSource.chunk_id && (
+                    <span className="text-xs">
+                      • Chunk: {selectedSource.chunk_id.slice(0, 8)}...
+                    </span>
+                  )}
+                </div>
+                {isWebSource && selectedSource.url && (
+                  <a 
+                    href={selectedSource.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline text-xs"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span className="truncate">{selectedSource.url}</span>
+                  </a>
                 )}
               </div>
             </div>
@@ -80,14 +100,33 @@ export function SourceViewer() {
           </div>
           
           {/* Actions */}
-          <div className="mt-6 flex gap-2">
-            <Button variant="outline" size="sm" className="text-xs">
-              View Full Document
-            </Button>
-            <Button variant="outline" size="sm" className="text-xs">
-              Download PDF
-            </Button>
-            <Button variant="outline" size="sm" className="text-xs">
+          <div className="mt-6 flex gap-2 flex-wrap">
+            {isWebSource && selectedSource.url ? (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="text-xs"
+                onClick={() => window.open(selectedSource.url, '_blank')}
+              >
+                <ExternalLink className="w-3 h-3 mr-1.5" />
+                Open in Browser
+              </Button>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" className="text-xs">
+                  View Full Document
+                </Button>
+                <Button variant="outline" size="sm" className="text-xs">
+                  Download PDF
+                </Button>
+              </>
+            )}
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="text-xs"
+              onClick={() => navigator.clipboard.writeText(content)}
+            >
               Copy Content
             </Button>
           </div>

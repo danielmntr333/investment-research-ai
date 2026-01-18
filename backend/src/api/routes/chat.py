@@ -45,6 +45,8 @@ class SourceDocument(BaseModel):
     content_preview: str = Field(..., description="Preview of the relevant content")
     chunk_id: Optional[str] = Field(default=None, description="Chunk identifier")
     similarity: Optional[float] = Field(default=None, description="Similarity score")
+    source_type: str = Field(default="document", description="Type: 'document' or 'web'")
+    url: Optional[str] = Field(default=None, description="URL for web sources")
 
 
 class ChatResponse(BaseModel):
@@ -104,18 +106,35 @@ async def chat(request: ChatRequest):
                 document_ids=request.document_ids
             )
             
-            # Format response with sources
+            # Format response with sources - web results FIRST, then documents
+            source_documents = []
+            source_number = 1
+            
+            # Add web search results FIRST if present
+            web_results = result.get('web_search_results', [])
+            for web_src in web_results:
+                source_documents.append(SourceDocument(
+                    source_number=source_number,
+                    document_name=web_src.get('title', 'Web Search Result'),
+                    content_preview=web_src.get('content', '')[:200],
+                    similarity=web_src.get('score'),
+                    source_type='web',
+                    url=web_src.get('url')
+                ))
+                source_number += 1
+            
+            # Then add document sources
             sources = result.get('research_output', {}).get('sources', [])
-            source_documents = [
-                SourceDocument(
-                    source_number=src.get('source_number', idx + 1),
+            for src in sources:
+                source_documents.append(SourceDocument(
+                    source_number=source_number,
                     document_name=src.get('metadata', {}).get('document_name', 'Unknown Document'),
                     content_preview=src.get('content', '')[:200],
                     chunk_id=src.get('chunk_id'),
-                    similarity=src.get('similarity')
-                )
-                for idx, src in enumerate(sources)
-            ]
+                    similarity=src.get('similarity'),
+                    source_type='document'
+                ))
+                source_number += 1
             
             return ChatResponse(
                 answer=result['final_answer'],
@@ -145,7 +164,8 @@ async def chat(request: ChatRequest):
                     document_name=src.get('metadata', {}).get('document_name', 'Unknown Document'),
                     content_preview=src.get('content', '')[:200],
                     chunk_id=src.get('chunk_id'),
-                    similarity=src.get('similarity')
+                    similarity=src.get('similarity'),
+                    source_type='document'
                 )
                 for idx, src in enumerate(sources)
             ]
@@ -219,18 +239,34 @@ async def chat_stream(request: ChatRequest):
                 
                 # Stream final answer if we got final state
                 if final_state:
-                    # Format sources
+                    source_list = []
+                    source_number = 1
+                    
+                    # Add web search results FIRST if present
+                    web_results = final_state.get('web_search_results', [])
+                    for web_src in web_results:
+                        source_list.append({
+                            'source_number': source_number,
+                            'document_name': web_src.get('title', 'Web Search Result'),
+                            'content_preview': web_src.get('content', '')[:200],
+                            'similarity': web_src.get('score'),
+                            'source_type': 'web',
+                            'url': web_src.get('url')
+                        })
+                        source_number += 1
+                    
+                    # Then add document sources
                     sources = final_state.get('research_output', {}).get('sources', [])
-                    source_list = [
-                        {
-                            'source_number': src.get('source_number', idx + 1),
+                    for src in sources:
+                        source_list.append({
+                            'source_number': source_number,
                             'document_name': src.get('metadata', {}).get('document_name', 'Unknown Document'),
                             'content_preview': src.get('content', '')[:200],
                             'chunk_id': src.get('chunk_id'),
-                            'similarity': src.get('similarity')
-                        }
-                        for idx, src in enumerate(sources)
-                    ]
+                            'similarity': src.get('similarity'),
+                            'source_type': 'document'
+                        })
+                        source_number += 1
                     
                     # Stream final answer
                     final_event = {

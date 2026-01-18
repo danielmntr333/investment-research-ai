@@ -74,6 +74,9 @@ export function ChatInterface() {
     setLoading(true);
     setStartTime(Date.now());
     setElapsedTime(0);
+    
+    // Show immediate feedback to user while waiting for first event
+    setPipelineStep('🤔 Thinking...');
 
     // Prepare assistant message ID (but don't create message yet)
     const assistantMessageId = `msg_${Date.now() + 1}`;

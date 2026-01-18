@@ -17,6 +17,8 @@ export interface Source {
   content_preview: string;
   chunk_id?: string;
   similarity?: number;
+  source_type?: 'document' | 'web';
+  url?: string;
   // Legacy fields for backward compatibility
   content?: string;
   score?: number;

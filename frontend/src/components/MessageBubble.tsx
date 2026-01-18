@@ -1,4 +1,4 @@
-import { User, Bot, ExternalLink } from 'lucide-react';
+import { User, Bot, ExternalLink, FileText, Globe } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { useStore, type Message } from '@/store/useStore';
 import { Button } from './ui/button';
@@ -124,39 +124,64 @@ export function MessageBubble({ message }: MessageBubbleProps) {
               </span>
             </summary>
             <div className="mt-3 space-y-2 bg-gradient-to-br from-muted/50 to-muted/30 backdrop-blur-sm rounded-xl p-3 border border-border/50">
-              {message.sources.map((source, idx) => (
-                <div 
-                  key={idx}
-                  className="bg-background/60 rounded-lg p-3 hover:bg-background/90 transition-all cursor-pointer border border-border/30 hover:border-border/60 hover:shadow-sm group/source"
-                  onClick={() => openSourceViewer(source)}
-                >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <span className="inline-flex items-center justify-center w-6 h-6 text-[10px] font-bold text-white bg-gradient-to-br from-blue-500 to-indigo-600 rounded-md flex-shrink-0">
-                        {source.source_number}
-                      </span>
-                      <span className="text-xs font-semibold text-foreground truncate">
-                        {source.document_name}
-                      </span>
+              {message.sources.map((source, idx) => {
+                const isWebSource = source.source_type === 'web';
+                const SourceIcon = isWebSource ? Globe : FileText;
+                
+                return (
+                  <div 
+                    key={idx}
+                    className="bg-background/60 rounded-lg p-3 hover:bg-background/90 transition-all border border-border/30 hover:border-border/60 hover:shadow-sm group/source"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="flex items-center gap-2 flex-1 min-w-0">
+                        <span className={`inline-flex items-center justify-center w-6 h-6 text-[10px] font-bold text-white rounded-md flex-shrink-0 ${
+                          isWebSource 
+                            ? 'bg-gradient-to-br from-purple-500 to-pink-600' 
+                            : 'bg-gradient-to-br from-blue-500 to-indigo-600'
+                        }`}>
+                          {source.source_number}
+                        </span>
+                        <SourceIcon className="w-3 h-3 text-muted-foreground flex-shrink-0" />
+                        <span className="text-xs font-semibold text-foreground truncate">
+                          {source.document_name}
+                        </span>
+                      </div>
+                      {source.similarity !== undefined && (
+                        <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 rounded-full whitespace-nowrap">
+                          {(source.similarity * 100).toFixed(0)}% match
+                        </span>
+                      )}
                     </div>
-                    {source.similarity !== undefined && (
-                      <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 rounded-full whitespace-nowrap">
-                        {(source.similarity * 100).toFixed(0)}% match
-                      </span>
-                    )}
+                    <p className="text-[11px] text-muted-foreground line-clamp-2 leading-relaxed mb-2">
+                      {source.content_preview || source.content}
+                    </p>
+                    <div className="flex items-center justify-between text-[10px] text-muted-foreground group-hover/source:text-foreground transition-colors">
+                      {isWebSource && source.url ? (
+                        <a 
+                          href={source.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 hover:text-blue-500 transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          <span className="underline">Visit website</span>
+                        </a>
+                      ) : (
+                        <span 
+                          className="flex items-center gap-1 cursor-pointer"
+                          onClick={() => openSourceViewer(source)}
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          View full content
+                        </span>
+                      )}
+                      <span className="opacity-0 group-hover/source:opacity-100 transition-opacity">→</span>
+                    </div>
                   </div>
-                  <p className="text-[11px] text-muted-foreground line-clamp-2 leading-relaxed mb-2">
-                    {source.content_preview || source.content}
-                  </p>
-                  <div className="flex items-center justify-between text-[10px] text-muted-foreground group-hover/source:text-foreground transition-colors">
-                    <span className="flex items-center gap-1">
-                      <ExternalLink className="w-3 h-3" />
-                      View full content
-                    </span>
-                    <span className="opacity-0 group-hover/source:opacity-100 transition-opacity">→</span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </details>
         )}
